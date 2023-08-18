@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Children, useState } from "react";
 import styled from "styled-components";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 
@@ -18,15 +18,21 @@ export default function Tree() {
                 { text: "sub-A4" },
                 {
                     text: "sub-A5",
-                    state: "closed",
-                    children: [{ text: "sub-A5A", children: [{ text: "sub-A5A1" }] }, { text: "sub_A5B" }],
+                    state: false,
+                    children: [
+                        {
+                            text: "sub-A5A",
+                            children: [{ text: "sub-A5A1" }],
+                        },
+                        { text: "sub_A5B" },
+                    ],
                 },
                 { text: "sub-A6" },
                 { text: "sub-A7" },
                 { text: "sub-A8" },
                 {
                     text: "sub-A9",
-                    state: "closed",
+                    state: false,
                     children: [{ text: "sub-A9A" }, { text: "sub-A9B" }],
                 },
                 { text: "sub-A10" },
@@ -36,24 +42,45 @@ export default function Tree() {
         },
         {
             text: "rootB",
-            state: "closed",
+            state: false,
             children: [{ text: "sub-B1" }, { text: "sub-B2" }, { text: "sub-B3" }],
         },
     ];
-    const treeData = {
-        names: [] as string[],
-        values: [] as string[],
-        depth03: [] as string[],
-        state: [] as string[],
-    };
-    const { names, values } = DATA.reduce((data, item) => {
-        data.names.push(item.text);
-        data.values.push(item.state);
-        return data;
-    }, treeData);
 
-    console.log(texts);
-    return <div.treeBox>asdasd</div.treeBox>;
+    return (
+        <div.treeBox>
+            {DATA.map((data, i) => {
+                return (
+                    <div key={i}>
+                        {data.children && <ChildrenBox text={data.text} state={data.state} childrens={data.children} />}
+                    </div>
+                );
+            })}
+        </div.treeBox>
+    );
+}
+
+function ChildrenBox({ text, state, childrens }: { text: string; state: boolean; childrens: any[] }) {
+    const [expand, setExpand] = useState(state);
+    return (
+        <div>
+            {text}
+            <button
+                onClick={() => {
+                    setExpand(!expand);
+                }}
+            >
+                {expand ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+            </button>
+
+            {expand
+                ? childrens.map((data, i) => {
+                      console.log(data);
+                      return <div key={i}>{data.text}</div>;
+                  })
+                : null}
+        </div>
+    );
 }
 
 const div = {
