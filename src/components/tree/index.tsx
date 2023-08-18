@@ -4,6 +4,8 @@ import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 // "DATA"를 활용하여 tree를 그리시오.
 // 아이콘은 KeyboardArrowDown, KeyboardArrowUp 활용.
 
+// + 우클릭 후 노드 추가삭제수정 기능
+
 export default function Tree() {
   const DATA = [
     {

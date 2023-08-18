@@ -1,22 +1,12 @@
-import CustomDougnutChart from "./components/chart/doughnut";
-import CustomBarChart from "./components/chart/bar";
-import CustomLineChart from "./components/chart/line";
-import styled from "styled-components";
+import { BrowserRouter } from "react-router-dom";
+import RouterComponents from "./route";
 
 function App() {
   return (
-    <Wrapper>
-      <CustomDougnutChart />
-      <CustomBarChart />
-      <CustomLineChart />
-    </Wrapper>
+    <BrowserRouter>
+      <RouterComponents />
+    </BrowserRouter>
   );
 }
 
 export default App;
-
-const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  width: 500px;
-`;
