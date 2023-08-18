@@ -14,17 +14,13 @@ export default function CustomDougnutChart() {
         { label: "Purple", value: 2 },
         { label: "Orange", value: 3 },
     ];
+    const chartValue = { names: [] as string[], values: [] as number[] };
+    const { names, values } = chartData.reduce((data, item) => {
+        data.names.push(item.label);
+        data.values.push(item.value);
+        return data;
+    }, chartValue);
 
-    const { names, values } = chartData.reduce(
-        (data, item) => {
-            data.names.push(item.label);
-            data.values.push(item.value);
-            return data;
-        },
-        { names: [], values: [] }
-    );
-
-    console.log(names, values);
     return (
         <div style={{ width: 200 }}>
             <Doughnut
