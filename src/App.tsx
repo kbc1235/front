@@ -1,12 +1,15 @@
-import { useState } from "react";
 import CustomDougnutChart from "./components/chart";
+import CustomBarChart from "./components/chartbar";
+import CustomLineChart from "./components/chartLine";
 
 function App() {
-  return (
-    <>
-      <CustomDougnutChart />
-    </>
-  );
+    return (
+        <>
+            <CustomDougnutChart />
+            <CustomBarChart />
+            <CustomLineChart />
+        </>
+    );
 }
 
 export default App;
