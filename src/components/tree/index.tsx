@@ -1,4 +1,4 @@
-import React, { Children, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 
@@ -75,8 +75,14 @@ function ChildrenBox({ text, state, childrens }: { text: string; state: boolean;
 
             {expand
                 ? childrens.map((data, i) => {
-                      console.log(data);
-                      return <div key={i}>{data.text}</div>;
+                      return (
+                          <div key={i}>
+                              {data.text}
+                              {data.children && (
+                                  <ChildrenBox text={data.text} state={data.state} childrens={data.children} />
+                              )}
+                          </div>
+                      );
                   })
                 : null}
         </div>
@@ -85,16 +91,15 @@ function ChildrenBox({ text, state, childrens }: { text: string; state: boolean;
 
 const div = {
     treeBox: styled.div`
-        & > div + div {
+        & button + div {
+            &:first-child {
+                border: none;
+            }
+            margin-top: 30px;
+            border: 1px solid;
+        }
+        & div + div {
             margin-top: 20px;
         }
-    `,
-    depth01: styled.div`
-        display: flex;
-        align-items: center;
-    `,
-    depth02: styled.div`
-        display: flex;
-        align-items: center;
     `,
 };
