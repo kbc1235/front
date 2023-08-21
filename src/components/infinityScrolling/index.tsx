@@ -1,39 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 export default function InfinityScrolling() {
-  const [target, setTarget] = useState();
+  const targetRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let observer: IntersectionObserver;
+    if (!targetRef.current) return;
 
-    if (target) {
-      observer = new IntersectionObserver(
-        () => {
-          alert("hi");
-        },
-        { threshold: 1 }
-      );
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        alert("hi");
+      },
+      { threshold: 1 }
+    );
 
-      observer.observe(target);
-    }
+    observer.observe(targetRef.current);
 
-    () => {
-      observer && observer.disconnect();
-    };
+    () => observer && observer.disconnect();
   }, []);
 
   return (
     <div>
-      <div>헤더</div>
+      <div.header>헤더</div.header>
 
-      <div.content className="content">콘텐츠</div.content>
+      <div.content ref={targetRef}>콘텐츠</div.content>
 
-      <div>푸터</div>
+      <div.footer>푸터</div.footer>
     </div>
   );
 }
 
 const div = {
-  content: styled.div``,
+  header: styled.div`
+    height: 1000px;
+    background-color: #eee;
+  `,
+  content: styled.div`
+    height: 1000px;
+    background-color: #e00;
+  `,
+  footer: styled.div`
+    height: 200px;
+    background-color: #08be08;
+  `,
 };

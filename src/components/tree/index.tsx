@@ -52,7 +52,9 @@ export default function Tree() {
             {DATA.map((data, i) => {
                 return (
                     <div key={i} className="depth_box">
-                        {data.children && <ChildrenBox text={data.text} state={data.state} childrens={data.children} />}
+                        {data.children && (
+                            <ChildrenBox text={data.text} state={state || false} childrens={data.children} />
+                        )}
                     </div>
                 );
             })}
@@ -77,12 +79,11 @@ function ChildrenBox({ text, state, childrens }: { text: string; state: boolean;
 
             {expand
                 ? childrens.map((data, i) => {
+                      const { text, children, state } = data;
                       return (
                           <div key={i}>
-                              {data.text}
-                              {data.children && (
-                                  <ChildrenBox text={data.text} state={data.state} childrens={data.children} />
-                              )}
+                              {text}
+                              {children && <ChildrenBox text={text} state={state || false} childrens={children} />}
                           </div>
                       );
                   })
