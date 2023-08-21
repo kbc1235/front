@@ -51,7 +51,7 @@ export default function Tree() {
         <div.treeBox>
             {DATA.map((data, i) => {
                 return (
-                    <div key={i}>
+                    <div key={i} className="depth_box">
                         {data.children && <ChildrenBox text={data.text} state={data.state} childrens={data.children} />}
                     </div>
                 );
@@ -63,15 +63,17 @@ export default function Tree() {
 function ChildrenBox({ text, state, childrens }: { text: string; state: boolean; childrens: any[] }) {
     const [expand, setExpand] = useState(state);
     return (
-        <div>
-            {text}
-            <button
-                onClick={() => {
-                    setExpand(!expand);
-                }}
-            >
-                {expand ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-            </button>
+        <div className="depth_box">
+            <div className="flex_box">
+                <span>{text}</span>
+                <button
+                    onClick={() => {
+                        setExpand(!expand);
+                    }}
+                >
+                    {expand ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+                </button>
+            </div>
 
             {expand
                 ? childrens.map((data, i) => {
@@ -91,12 +93,20 @@ function ChildrenBox({ text, state, childrens }: { text: string; state: boolean;
 
 const div = {
     treeBox: styled.div`
-        & button + div {
-            &:first-child {
-                border: none;
+        & .depth_box {
+            border: 1px solid #e3e3e3;
+            & button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 24px;
+                height: 24px;
+                margin-left: 20px;
             }
-            margin-top: 30px;
-            border: 1px solid;
+        }
+        .flex_box {
+            display: flex;
+            align-items: center;
         }
         & div + div {
             margin-top: 20px;
