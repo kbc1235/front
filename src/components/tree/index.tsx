@@ -50,14 +50,13 @@ export default function Tree() {
   return (
     <div.treeBox>
       {DATA.map((data, i) => {
-        const { text, state, children } = data;
         return (
-          <div key={i}>
-            {children && (
+          <div key={i} className="depth_box">
+            {data.children && (
               <ChildrenBox
-                text={text}
+                text={data.text}
                 state={state || false}
-                children={children}
+                childrens={data.children}
               />
             )}
           </div>
@@ -70,31 +69,39 @@ export default function Tree() {
 function ChildrenBox({
   text,
   state,
-  children,
+  childrens,
 }: {
   text: string;
   state: boolean;
-  children: any[];
+  childrens: any[];
 }) {
   const [expand, setExpand] = useState(state);
   return (
-    <div>
-      {text}
-      <button
-        onClick={() => {
-          setExpand(!expand);
-        }}
-      >
-        {expand ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-      </button>
+    <div className="depth_box">
+      <div className="flex_box">
+        <span>{text}</span>
+        <button
+          onClick={() => {
+            setExpand(!expand);
+          }}
+        >
+          {expand ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+        </button>
+      </div>
 
       {expand
-        ? children.map((data, i) => {
+        ? childrens.map((data, i) => {
+            const { text, children, state } = data;
             return (
               <div key={i}>
                 {text}
-
-                {children && <ChildrenBox {...data} />}
+                {children && (
+                  <ChildrenBox
+                    text={text}
+                    state={state || false}
+                    childrens={children}
+                  />
+                )}
               </div>
             );
           })
@@ -105,12 +112,20 @@ function ChildrenBox({
 
 const div = {
   treeBox: styled.div`
-    & button + div {
-      &:first-child {
-        border: none;
+    & .depth_box {
+      border: 1px solid #e3e3e3;
+      & button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        margin-left: 20px;
       }
-      margin-top: 30px;
-      border: 1px solid;
+    }
+    .flex_box {
+      display: flex;
+      align-items: center;
     }
     & div + div {
       margin-top: 20px;
