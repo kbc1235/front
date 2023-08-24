@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { Column } from "../../pages/datatable";
 
 interface DataType {
@@ -8,11 +9,15 @@ interface DataType {
 export default function DataTable({ Colums, Rows }: DataType) {
     return (
         <>
-            <table>
+            <StyledTable>
                 <thead>
                     <tr>
                         {Colums.map((col, index) => {
-                            return <th key={index}>{col.label}</th>;
+                            return (
+                                <th key={index} style={{ textAlign: col.align }}>
+                                    {col.label}
+                                </th>
+                            );
                         })}
                     </tr>
                 </thead>
@@ -32,7 +37,16 @@ export default function DataTable({ Colums, Rows }: DataType) {
                         );
                     })}
                 </tbody>
-            </table>
+            </StyledTable>
         </>
     );
 }
+
+const StyledTable = styled.table`
+    border: 1px solid #ccc;
+    th,
+    td {
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+`;

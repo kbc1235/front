@@ -4,7 +4,7 @@ import DataTable from "../components/dataTable";
 export interface Column {
     id: string;
     label: string;
-    align: string;
+    align: string | any;
     format?: (column: string, row: any) => string;
 }
 
