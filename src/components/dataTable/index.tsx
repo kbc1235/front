@@ -1,4 +1,3 @@
-import React from "react";
 import { Column } from "../../pages/datatable";
 
 interface DataType {
@@ -18,14 +17,14 @@ export default function DataTable({ Colums, Rows }: DataType) {
                     </tr>
                 </thead>
                 <tbody>
-                    {Rows.map((row, index: number) => {
+                    {Rows.map((row, index) => {
                         return (
                             <tr key={index}>
                                 <td>{row.name}</td>
                                 <td>{row.old}</td>
                                 <td>{row.skill}</td>
                                 <td>
-                                    {Colums.map((col: any) => {
+                                    {Colums.map((col) => {
                                         return col.format ? col.format("", row) : "";
                                     })}
                                 </td>
