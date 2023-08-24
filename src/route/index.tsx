@@ -5,6 +5,7 @@ import CustomBarChart from "../components/chart/bar";
 import CustomLineChart from "../components/chart/line";
 import Tree from "../components/tree";
 import InfinityScrolling from "../components/infinityScrolling";
+import DataTablePage from "../pages/datatable";
 
 export default function RouterComponents() {
   return (
@@ -14,6 +15,7 @@ export default function RouterComponents() {
       <Route path="/chart/line" element={<CustomLineChart />} />
       <Route path="/tree" element={<Tree />} />
       <Route path="/infinityScroll" element={<InfinityScrolling />} />
+      <Route path="/dataTable" element={<DataTablePage />} />
     </Routes>
   );
 }

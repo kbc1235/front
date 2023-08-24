@@ -8,7 +8,10 @@ export default function InfinityScrolling() {
     if (!targetRef.current) return;
 
     const observer = new IntersectionObserver(
-      (entries, observer) => {
+      (
+        entries: IntersectionObserverEntry[],
+        observer: IntersectionObserver
+      ) => {
         alert("hi");
       },
       { threshold: 1 }

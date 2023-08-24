@@ -90,14 +90,11 @@ function ChildrenBox({
 
       {expand
         ? children.map((data, i) => {
-            const { text, children, state } = data;
             return (
               <div key={i}>
                 {text}
 
-                {children && (
-                  <ChildrenBox text={text} state={state} children={children} />
-                )}
+                {children && <ChildrenBox {...data} />}
               </div>
             );
           })
