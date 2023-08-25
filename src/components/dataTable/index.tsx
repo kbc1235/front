@@ -1,4 +1,4 @@
-import React from "react";
+import styled from "styled-components";
 import { Column } from "../../pages/datatable";
 
 interface DataType {
@@ -9,31 +9,50 @@ interface DataType {
 export default function DataTable({ Colums, Rows }: DataType) {
     return (
         <>
-            <table>
+            <StyledTable>
                 <thead>
                     <tr>
                         {Colums.map((col, index) => {
-                            return <th key={index}>{col.label}</th>;
+                            return (
+                                <th key={index} style={{ textAlign: col.align }}>
+                                    {col.label}
+                                </th>
+                            );
                         })}
                     </tr>
                 </thead>
                 <tbody>
-                    {Rows.map((row, index: number) => {
+                    {Rows.map((row, index) => {
                         return (
-                            <tr key={index}>
+                            <tr key={index} id={row.id}>
+                                <td>
+                                    {Colums.map((col) => {
+                                        return col.check ? col.check(col, row) : "";
+                                    })}
+                                </td>
                                 <td>{row.name}</td>
                                 <td>{row.old}</td>
                                 <td>{row.skill}</td>
                                 <td>
-                                    {Colums.map((col: any) => {
-                                        return col.format ? col.format("", row) : "";
+                                    {Colums.map((col) => {
+                                        return col.format ? col.format(col, row) : "";
                                     })}
                                 </td>
                             </tr>
                         );
                     })}
                 </tbody>
-            </table>
+            </StyledTable>
         </>
     );
 }
+
+const StyledTable = styled.table`
+    width: 100%;
+    border: 1px solid #ccc;
+    th,
+    td {
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+`;
