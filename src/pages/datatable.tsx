@@ -1,4 +1,4 @@
-import { useState, useEffect, CSSProperties } from "react";
+import { useState, useEffect, CSSProperties, ChangeEvent } from "react";
 import DataTable from "../components/dataTable";
 
 export interface Column {
@@ -12,45 +12,42 @@ export interface Column {
 export default function DataTablePage() {
     const [colums, setColums] = useState<Column[]>([]);
     const [rows, setRows] = useState<{ [key: string]: any }[]>([]);
-    const [checkItem, setCheckItem] = useState<string[]>([]);
+    const [checkItem, setCheckItem] = useState<String[]>([]);
 
-    const handleCheck = (id: string) => {
-        console.log(checkItem.includes(id), id, checkItem);
-        if (checkItem.includes(id)) {
-            setCheckItem(
-                checkItem.filter((item) => {
-                    return item !== id;
-                })
-            );
-        } else {
-            setCheckItem((checkItem) => [...checkItem, id]);
-        }
+    const handleCheck = (id: string): void => {
+        setCheckItem((prev) => {
+            const check = prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id];
+            return check;
+        });
     };
-    const handleAllCheck = (id: string) => {};
+    const handleAllCheck = (): void => {
+        setCheckItem((prev) => {
+            if (prev.length === 0) {
+                return [];
+            } else {
+                const allCheckIds = rows.map((row) => row.id);
+                return allCheckIds;
+            }
+        });
+    };
 
     useEffect(() => {
         setColums([
             {
                 id: "checkbox",
                 label: (
-                    <input
-                        type="checkbox"
-                        onChange={(e) => {
-                            handleAllCheck(e.target.value);
-                        }}
-                    />
+                    <input type="checkbox" checked={checkItem.length === 0 ? false : true} onChange={handleAllCheck} />
                 ),
                 align: "center",
                 check: (colum, row) => {
                     const checkbox = row.isCheck ? (
-                        <div>
-                            <input
-                                type="checkbox"
-                                onChange={() => {
-                                    handleCheck(row.id);
-                                }}
-                            />
-                        </div>
+                        <input
+                            type="checkbox"
+                            checked={checkItem.includes(row.id) ? true : false}
+                            onChange={() => {
+                                handleCheck(row.id);
+                            }}
+                        />
                     ) : (
                         ""
                     );
@@ -71,20 +68,21 @@ export default function DataTablePage() {
                 },
             },
         ]);
-
         setRows([
             { id: "check01", isCheck: true, name: "이름", old: 11, skill: "리액트", isDev: true },
             { id: "check02", isCheck: true, name: "이름2", old: 11, skill: "퍼블", isDev: false },
             { id: "check03", isCheck: true, name: "이름", old: 11, skill: "리액트", isDev: true },
         ]);
     }, []);
-    console.log();
+
+    console.log(checkItem);
+
     return (
         <>
+            <DataTable Colums={colums} Rows={rows} />
             {checkItem.map((data) => {
                 return <div>{data}</div>;
             })}
-            <DataTable Colums={colums} Rows={rows} />
         </>
     );
 }
