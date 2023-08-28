@@ -21,6 +21,7 @@ export default function DataTable({ Colums, Rows }: DataType) {
                         })}
                     </tr>
                 </thead>
+
                 <tbody>
                     {Rows.map((row, index) => {
                         return (
